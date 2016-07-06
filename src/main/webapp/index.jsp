@@ -1,0 +1,1 @@
+<script>window.location="admin_access/index.do"</script>

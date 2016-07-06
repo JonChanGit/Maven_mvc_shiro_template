@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/util 
+    	http://www.springframework.org/schema/util/spring-util-4.0.xsd
+    	http://www.springframework.org/schema/tx 
+    	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd" >
+	
+	<!-- 引入properties文件 （JDBC配置） -->
+	<context:property-placeholder location="classpath:property/jdbc.properties"/>	
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${database.driverClassName}" />
+        <property name="jdbcUrl" value="${database.url}" />
+        <property name="user" value="${database.username}" />
+        <property name="password" value="${database.password}" />
+       	<!--连接池中保留的最大连接数。默认值: 15 -->   
+        <property name="maxPoolSize" value="20"/>  
+        <!-- 连接池中保留的最小连接数，默认为：3-->  
+        <property name="minPoolSize" value="2"/>  
+        <!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3-->  
+        <property name="initialPoolSize" value="2"/>  
+        <!--最大空闲时间，60秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->   
+        <property name="maxIdleTime" value="60"/>
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->   
+         <property name="acquireIncrement" value="2"/>  
+        <!--定义在从数据库获取新连接失败后重复尝试的次数。默认值: 30 ；小于等于0表示无限次-->   
+         <property name="acquireRetryAttempts" value="0"/>  
+         <!--重新尝试的时间间隔，默认为：1000毫秒-->   
+         <property name="acquireRetryDelay" value="1000" />  
+         <!--如果为false，则获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常，但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。默认: false-->   
+         <property name="breakAfterAcquireFailure" value="false"/>  
+    </bean>
+		
+	<!--定义Hibernate的SessionFactory -->  
+    <!-- SessionFactory使用的数据源为上面的数据源 -->  
+    <!-- 指定了Hibernate的映射文件和配置信息 -->  
+    <bean id="sessionFactory"  
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource"/> 
+        <property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="show_sql">true</prop>  
+                <prop key="hibernate.format_sql">true</prop>  
+                <prop key="hibernate.jdbc.batch_size">20</prop>
+            </props>  
+        </property>
+        <!-- 自动扫描实体对象 com.jon.web.entity的包结构中存放实体类 -->
+		<property name="packagesToScan" value="com.jon.web.entity" />
+        <!-- <property name="configLocations">
+        	<list>
+        		<value>
+        			classpath*:com/jon/web/cfg/hibernate/hibernate.cfg.xml
+        		</value>
+        	</list>
+        </property>-->
+    </bean>  
+	
+<!-- 	代理事物配置 begin-->
+	<!-- 		事物管理 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 		事物特性描述 -->
+	<bean id="transactionBese" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" lazy-init="true" abstract="true">
+		<property name="transactionManager" ref="transactionManager"></property><!--事物管理 -->
+		<property name="transactionAttributes"><!--事物特征   碰到什么问题才开启事务 -->
+			<props><!--具体描述： -->
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop><!-- 支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。   -->
+				<prop key="update*">PROPAGATION_REQUIRED,-Exception</prop><!-- -Exception表示有Exception抛出时,事务回滚. -代表回滚+就代表提交  -->
+				<prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="get*">PROPAGATION_NEVER</prop><!-- 以非事务方式执行，如果当前存在事务，则抛出异常。  -->
+			</props>
+		</property>
+	</bean>
+<!-- 	代理事物配置 end-->
+
+<!-- 	AOP -->
+</beans>	

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd    
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd    
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd    
+            http://www.springframework.org/schema/util http://ww.springframework.org/schema/util/spring-util-4.0.xsd">
+
+
+	 <bean id="userDAO" class="com.jon.web.dao.UserDAO">
+	 	<property name="sessionFactory" ref="sessionFactory"></property>
+	 </bean>
+<!-- 	 Warring begin-->
+	<!-- 		使UserManager 去继承  transactionBese  从而得到事物处理的能力 ，此方式可以避免一些问题（例如事物无法关闭，提交等）-->
+	 <bean id="userManagerBase" class="com.jon.web.service.UserManager">
+	 	<property name="userDAO" ref="userDAO"></property>
+	 </bean>
+	 
+	 <bean id="userManager" parent="transactionBese">
+	 	<property name="target" ref="userManagerBase"></property>
+	 </bean>
+<!-- 	 Warring end -->
+
+</beans>
