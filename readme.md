@@ -1,0 +1,1 @@
+# 这个是使用了 Maven+Spring +hibernate+mvc+shiro+Bootcss 的 JavaWeb 项目模板
