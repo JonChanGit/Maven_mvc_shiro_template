@@ -12,6 +12,9 @@ public class SysUserRole {
 
     private String sysUserId;
 
+    /**
+     * 角色ID
+     */
     private String sysRoleId;
 
     public String getId() {

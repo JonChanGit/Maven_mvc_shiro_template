@@ -8,6 +8,7 @@
             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd    
             http://www.springframework.org/schema/util http://ww.springframework.org/schema/util/spring-util-3.0.xsd">
 
+<!-- 所有身份认证的Bean配置 -->
 
 	 <bean id="sysUserDAO" class="com.jon.web.dao.imp.SysUserDAOImp">
 	 	<property name="sessionFactory" ref="sessionFactory"></property>

@@ -1,4 +1,4 @@
-package com.jon.web.util;
+package com.jon.web.util.constantes;
 
 /**
  * 
@@ -16,4 +16,6 @@ public final class Constantes {
 	 * MVC 视图根路径
 	 */
 	public static final String MVC_VIEW_ROOT_PATH = "_views/admin/";
+	
+	
 }

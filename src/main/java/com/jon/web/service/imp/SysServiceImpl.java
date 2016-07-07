@@ -9,6 +9,7 @@ import com.jon.web.dao.SysUserDAO;
 import com.jon.web.entity.SysPermission;
 import com.jon.web.entity.SysUser;
 import com.jon.web.entity.dto.ActiveUser;
+import com.jon.web.entity.dto.SysUserExample;
 import com.jon.web.service.SysService;
 
 public class SysServiceImpl implements SysService {
@@ -30,13 +31,19 @@ public class SysServiceImpl implements SysService {
 
 	@Override
 	public List<SysPermission> findPermissionListByUserId(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sysPermissionDAO.findPermissionListByUserId(userid);
 	}
 
 	@Override
 	public SysUser findSysUserByUserCode(String userCode) throws Exception {
-		// TODO Auto-generated method stub
+		
+		
+		List<SysUser> list = sysUserDAO.selectByExample(userCode);
+		
+		if(list!=null && list.size()==1){
+			return list.get(0);
+		}	
+		
 		return null;
 	}
 

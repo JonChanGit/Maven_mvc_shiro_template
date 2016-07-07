@@ -182,9 +182,9 @@ String basePathh = request.getScheme()+"://"+request.getServerName()+":"+request
             <li class="header">功能导航</li>
             
 			
-			<c:if test="${activeUser.menus!=null }">
-				<c:forEach items="${activeUser.menus }" var="menu">
-					<li><a href="${baseurl }/${menu.url }"><i class="fa fa-circle-o text-info"></i>${menu.name }</a></li>
+			<c:if test="${activeUser.menus!=null}">
+				<c:forEach items="${activeUser.menus}" var="menu">
+					<li><a href="${baseurl}${menu.url}"><i class="fa fa-circle-o text-info"></i>${menu.name }</a></li>
 				</c:forEach>
 			</c:if>
 			

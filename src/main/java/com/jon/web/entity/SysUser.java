@@ -20,6 +20,10 @@ public class SysUser {
 
 	@Column(length = 32)
 	private String pwd;
+	/**
+	 * usercode
+	 * 用于登陆使用
+	 */
 	private String usercode;
 
 	private String username;

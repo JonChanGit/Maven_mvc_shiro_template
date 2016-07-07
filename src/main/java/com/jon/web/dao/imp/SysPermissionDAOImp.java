@@ -40,10 +40,19 @@ public class SysPermissionDAOImp implements SysPermissionDAO {
 		return (List<SysPermission>)query.list();
 	}
 
+	/**
+	 * 实际上的查询权限修饰符
+	 */
 	@Override
 	public List<SysPermission> findPermissionListByUserId(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String hql = "from SysPermission where type = 'permission' or type = 'menu' and id in "+
+						"(select sysPermissionId from SysRolePermission where sysRoleId in "+
+							"(select sysRoleId from SysUserRole where sysUserId = '"+userid+"'))";
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+		return (List<SysPermission>)query.list();
 	}
 
 }
