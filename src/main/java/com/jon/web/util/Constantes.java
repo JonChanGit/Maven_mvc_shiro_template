@@ -15,5 +15,5 @@ public final class Constantes {
 	/**
 	 * MVC 视图根路径
 	 */
-	public static final String MVC_VIEW_ROOT_PATH = "views/admin/";
+	public static final String MVC_VIEW_ROOT_PATH = "_views/admin/";
 }

@@ -87,6 +87,7 @@
 				<prop key="modify*">PROPAGATION_REQUIRED,-Exception</prop>
 				<prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
 				<prop key="get*">PROPAGATION_NEVER</prop><!-- 以非事务方式执行，如果当前存在事务，则抛出异常。  -->
+				<prop key="find*">PROPAGATION_NEVER</prop><!-- 以非事务方式执行，如果当前存在事务，则抛出异常。  -->
 			</props>
 		</property>
 	</bean>

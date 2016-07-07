@@ -1,5 +1,7 @@
 package com.jon.web.shiro;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -7,8 +9,11 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.jon.web.entity.SysPermission;
 import com.jon.web.entity.dto.ActiveUser;
+import com.jon.web.service.SysService;
 
 /**
  * 
@@ -22,8 +27,17 @@ import com.jon.web.entity.dto.ActiveUser;
  *
  */
 public class CustomRealm extends AuthorizingRealm{
+	
+	/**
+	 * 注入SysService
+	 */
+	private SysService sysService;
+	
+	
 
-	// 设置realm的名称
+	/**
+	 * 设置realm的名称
+	 */
 	@Override
 	public void setName(String name) {
 		super.setName("customRealm");
@@ -68,14 +82,32 @@ public class CustomRealm extends AuthorizingRealm{
 		ActiveUser activeUser = new ActiveUser();
 		activeUser.setUserid(userCode);
 		activeUser.setUsercode(userCode);
-		
+		activeUser.setUsername(userCode);
+		activeUser.setUseremail(userCode);
 		//根据ID取菜单
+		List<SysPermission> menuList = null;
+		try {
+			menuList = sysService.findMenuListByUserId("759282337");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		activeUser.setMenus(menuList);
 		
 
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
-				userCode, password, this.getName());
+				activeUser, password, this.getName());
 
 		return simpleAuthenticationInfo;
+	}
+
+
+	public SysService getSysService() {
+		return sysService;
+	}
+
+
+	public void setSysService(SysService sysService) {
+		this.sysService = sysService;
 	}
 	
 }

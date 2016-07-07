@@ -111,14 +111,14 @@ String basePathh = request.getScheme()+"://"+request.getServerName()+":"+request
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="dist/img/JonChan.png" class="user-image" alt="User Image"/>
-                  <span class="hidden-xs">Jon Chan</span>
+                  <span class="hidden-xs">${activeUser.username}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="dist/img/JonChan.png" class="img-circle" alt="User Image" />
                     <p>
-                      759282337@qq.com                      <small>2016-04-16</small>
+                      ${activeUser.useremail}                      <small>2016-04-16</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -180,7 +180,15 @@ String basePathh = request.getScheme()+"://"+request.getServerName()+":"+request
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">功能导航</li>
-            <li class="active treeview">
+            
+			
+			<c:if test="${activeUser.menus!=null }">
+				<c:forEach items="${activeUser.menus }" var="menu">
+					<li><a href="${baseurl }/${menu.url }"><i class="fa fa-circle-o text-info"></i>${menu.name }</a></li>
+				</c:forEach>
+			</c:if>
+			
+            <!-- <li class="active treeview">
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>文章</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
@@ -198,7 +206,7 @@ String basePathh = request.getScheme()+"://"+request.getServerName()+":"+request
               <ul class="treeview-menu">
                 <li><a href="admin_access.php?action=BlogHomePageOption.php"><i class="fa fa-circle-o"></i> 巨幕设置</a></li>
               </ul>
-            </li>
+            </li>-->
             
             
             

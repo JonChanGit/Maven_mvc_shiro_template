@@ -1,13 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-//相对于主站位置
-%>
+<%@ include file="linkfile/tag.jsp"%>
 <!DOCTYPE html>
 <html>
   <head> 
-    <base href="<%=basePath %>" />
+    <base href="${baseurl}" />
 <%@include file="linkfile/headerInfo.jsp" %>
      <title>仪表板</title>
   </head>
@@ -22,7 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <section class="content-header">
           <h1>
             仪表板
-            <small>控制中心</small>
+            <small>控制中心
+            </small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="admin_access.php"><i class="fa fa-dashboard"></i> Home</a></li>

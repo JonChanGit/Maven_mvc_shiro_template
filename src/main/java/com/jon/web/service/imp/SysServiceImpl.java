@@ -13,22 +13,23 @@ import com.jon.web.service.SysService;
 
 public class SysServiceImpl implements SysService {
 
-	@Autowired
 	private SysUserDAO sysUserDAO;
-	
-	@Autowired
+
 	private SysPermissionDAO sysPermissionDAO;
-
-	public SysUserDAO getSysUserDAO() {
-		return sysUserDAO;
-	}
-
-	public void setSysUserDAO(SysUserDAO sysUserDAO) {
-		this.sysUserDAO = sysUserDAO;
-	}
 
 	@Override
 	public ActiveUser authenticat(String userCode, String password) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<SysPermission> findMenuListByUserId(String userid) throws Exception {
+		return sysPermissionDAO.findMenuListByUserId(userid);
+	}
+
+	@Override
+	public List<SysPermission> findPermissionListByUserId(String userid) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -39,16 +40,20 @@ public class SysServiceImpl implements SysService {
 		return null;
 	}
 
-	@Override
-	public List<SysPermission> findMenuListByUserId(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public SysPermissionDAO getSysPermissionDAO() {
+		return sysPermissionDAO;
 	}
 
-	@Override
-	public List<SysPermission> findPermissionListByUserId(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public SysUserDAO getSysUserDAO() {
+		return sysUserDAO;
+	}
+
+	public void setSysPermissionDAO(SysPermissionDAO sysPermissionDAO) {
+		this.sysPermissionDAO = sysPermissionDAO;
+	}
+
+	public void setSysUserDAO(SysUserDAO sysUserDAO) {
+		this.sysUserDAO = sysUserDAO;
 	}
 	
 	//@Autowired

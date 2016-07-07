@@ -9,17 +9,22 @@
             http://www.springframework.org/schema/util http://ww.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
-	 <bean id="SysUserDAO" class="com.jon.web.dao.imp.SysUserDAOImp">
+	 <bean id="sysUserDAO" class="com.jon.web.dao.imp.SysUserDAOImp">
 	 	<property name="sessionFactory" ref="sessionFactory"></property>
 	 </bean>
-<!-- 	 Warring begin-->
-	<!-- 		使UserManager 去继承  transactionBese  从而得到事物处理的能力 ，此方式可以避免一些问题（例如事物无法关闭，提交等）-->
-	 <bean id="SysServiceBase" class="com.jon.web.service.imp.SysServiceImpl">
-	 	<property name="sysUserDAO" ref="SysUserDAO"></property>
+	 <bean id="sysPermissionDAO" class="com.jon.web.dao.imp.SysPermissionDAOImp">
+	 	<property name="sessionFactory" ref="sessionFactory"></property>
 	 </bean>
 	 
-	 <bean id="SysService" parent="transactionBese">
-	 	<property name="target" ref="SysServiceBase"></property>
+<!-- 	 Warring begin-->
+	<!-- 		使sysServiceManager 去继承  transactionBese  从而得到事物处理的能力 ，此方式可以避免一些问题（例如事物无法关闭，提交等）-->
+	 <bean id="sysServiceBase" class="com.jon.web.service.imp.SysServiceImpl">
+	 	<property name="sysUserDAO" ref="sysUserDAO"></property>
+	 	<property name="sysPermissionDAO" ref="sysPermissionDAO"></property>
+	 </bean>
+	 
+	 <bean id="sysServiceManager" parent="transactionBese">
+	 	<property name="target" ref="sysServiceBase"></property>
 	 </bean>
 <!-- 	 Warring end -->
 

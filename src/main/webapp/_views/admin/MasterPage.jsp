@@ -1,8 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ include file="linkfile/tag.jsp"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-//相对于主站位置
+// String path = request.getContextPath();
+// String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+// //相对于主站位置
 %>
 <!DOCTYPE html>
 <html>

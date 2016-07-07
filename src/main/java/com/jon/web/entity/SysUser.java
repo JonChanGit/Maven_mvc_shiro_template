@@ -26,8 +26,14 @@ public class SysUser {
 
 	private String password;
 
+	/**
+	 * 盐
+	 */
 	private String salt;
 
+	/**
+	 * 账号是否锁定，1：锁定，0未锁定
+	 */
 	private String locked;
 
 	public String getUsercode() {
