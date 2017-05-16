@@ -1,6 +1,6 @@
 "THE FC-WARE LICENSE" (Revision 42):
 JonChan <public.mail@qq.com> wrote this file. As long as you retain this notice you
-can do whatever you want with this stuff. If we meet some day, and you think
+can do whatever you want with this stuff(In addition to profit). If we meet some day, and you think
 this stuff is worth it, you can buy me a Fried Chicken in return. JonChan
 fork from:https://en.wikipedia.org/wiki/Beerware
 
